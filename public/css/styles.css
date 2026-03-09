@@ -1,0 +1,199 @@
+/* Mobile First CSS - Base styles for all devices */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header h1 {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+/* Desktop Navigation - visible by default on large screens */
+.desktop-nav {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding: 0;
+}
+
+.desktop-nav a {
+    text-decoration: none;
+    color: #0066cc;
+    font-weight: bold;
+}
+
+.desktop-nav a:hover {
+    text-decoration: underline;
+}
+
+/* Mobile Navigation - hidden by default */
+.mobile-nav {
+    display: none;
+}
+
+main h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.featured-vehicle {
+    background-color: #f5f5f5;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+}
+
+.featured-vehicle h3 {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.featured-vehicle ul {
+    list-style: none;
+    margin-bottom: 1.5rem;
+}
+
+.featured-vehicle li {
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.featured-vehicle li:before {
+    content: "•";
+    color: #0066cc;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+.featured-vehicle button {
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.featured-vehicle button:hover {
+    background-color: #0052a3;
+}
+
+/* Reviews section - hidden by default (only shows on mobile) */
+.reviews {
+    margin-bottom: 2rem;
+}
+
+.reviews h3 {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.reviews ul {
+    list-style: none;
+}
+
+.reviews li {
+    background-color: #f9f9f9;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    border-left: 3px solid #0066cc;
+}
+
+.upgrades h3 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.upgrades-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.upgrade-item {
+    background-color: #f5f5f5;
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.upgrade-item h4 {
+    color: #0066cc;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.upgrade-item p {
+    color: #555;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+}
+
+footer {
+    margin-top: 3rem;
+    text-align: center;
+    color: #666;
+    border-top: 2px solid #ddd;
+    padding-top: 1.5rem;
+}
+
+/* Helper class for mobile-only elements */
+.mobile-only {
+    display: none;
+}
+
+/* Mobile Styles (screens smaller than 768px) */
+@media screen and (max-width: 767px) {
+    .desktop-nav {
+        display: none;
+    }
+    
+    .mobile-nav {
+        display: block;
+        text-align: right;
+        margin-bottom: 1rem;
+    }
+    
+    .my-account {
+        text-decoration: none;
+        color: #0066cc;
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+    
+    .mobile-only {
+        display: block;
+    }
+}
+
+/* Desktop Styles (screens 768px and larger) */
+@media screen and (min-width: 768px) {
+    .upgrades-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .featured-vehicle {
+        padding: 3rem;
+    }
+}
