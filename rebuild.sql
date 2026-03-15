@@ -62,13 +62,16 @@ VALUES
 ('Steve', 'Rogers', 'steve@avengers.com', 'America4ever', 'Client'),
 ('Natasha', 'Romanoff', 'natasha@avengers.com', 'BlackWidow', 'Client');
 
--- Query 4 from Task 1 (modify description)
+-- we use the REPLACE function to update the image paths in the inv_image and inv_thumbnail columns, replacing '/images/' with '/images/vehicles/' for all records in the inventory table.
+-- at the moment ill make it temporary no images to update, but this will ensure that when we add new inventory items with the correct image paths, they will be updated accordingly.
 UPDATE inventory 
 SET inv_description = REPLACE(inv_description, 'small interiors', 'a huge interior') 
 WHERE inv_make = 'GM' AND inv_model = 'Hummer';
 
--- Query 6 from Task 1 (update image paths)
+
 UPDATE inventory 
 SET 
+-- we use the REPLACE function to update the image paths in the inv_image and inv_thumbnail columns, replacing '/images/' with '/images/vehicles/' for all records in the inventory table.
+-- at the moment ill make it temporary no images to update, but this will ensure that when we add new inventory items with the correct image paths, they will be updated accordingly.
     inv_image = REPLACE(inv_image, '/images/', '/images/vehicles/'),
     inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/');
