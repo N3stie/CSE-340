@@ -39,15 +39,77 @@ header h1 {
     text-decoration: underline;
 }
 
-/* Mobile Navigation - hidden by default */
-.mobile-nav {
-    display: none;
+
+/* Navigation Styles */
+nav {
+    background-color: #333;
+    border-radius: 8px;
+    margin-bottom: 2rem;
 }
 
-main h2 {
-    color: #333;
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
+.desktop-nav {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem;
+    margin: 0;
+}
+
+.desktop-nav li {
+    margin: 0;
+}
+
+.desktop-nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+    display: block;
+}
+
+.desktop-nav a:hover {
+    background-color: #0066cc;
+    border-radius: 4px;
+    transform: translateY(-2px);
+}
+
+.desktop-nav a.active {
+    background-color: #0066cc;
+    border-radius: 4px;
+}
+
+/* Mobile Navigation */
+.mobile-nav {
+    display: none;
+    padding: 1rem;
+    text-align: right;
+    background-color: #333;
+}
+
+.my-account {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    display: inline-block;
+}
+
+.my-account:hover {
+    background-color: #0066cc;
+    border-radius: 4px;
+}
+
+/* Mobile Styles */
+@media screen and (max-width: 767px) {
+    .desktop-nav {
+        display: none;
+    }
+    
+    .mobile-nav {
+        display: block;
+    }
 }
 
 .featured-vehicle {
