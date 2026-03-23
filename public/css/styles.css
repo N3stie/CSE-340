@@ -19,27 +19,6 @@ header h1 {
     font-size: 2rem;
 }
 
-/* Desktop Navigation - visible by default on large screens */
-.desktop-nav {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    padding: 0;
-}
-
-.desktop-nav a {
-    text-decoration: none;
-    color: #0066cc;
-    font-weight: bold;
-}
-
-.desktop-nav a:hover {
-    text-decoration: underline;
-}
-
-
 /* Navigation Styles */
 nav {
     background-color: #333;
@@ -101,17 +80,7 @@ nav {
     border-radius: 4px;
 }
 
-/* Mobile Styles */
-@media screen and (max-width: 767px) {
-    .desktop-nav {
-        display: none;
-    }
-    
-    .mobile-nav {
-        display: block;
-    }
-}
-
+/* Featured Vehicle Section */
 .featured-vehicle {
     background-color: #f5f5f5;
     padding: 2rem;
@@ -159,7 +128,7 @@ nav {
     background-color: #0052a3;
 }
 
-/* Reviews section - hidden by default (only shows on mobile) */
+/* Reviews section - mobile only */
 .reviews {
     margin-bottom: 2rem;
 }
@@ -182,6 +151,7 @@ nav {
     border-left: 3px solid #0066cc;
 }
 
+/* Upgrades Section */
 .upgrades h3 {
     color: #333;
     margin-bottom: 1.5rem;
@@ -212,6 +182,7 @@ nav {
     font-style: italic;
 }
 
+/* Footer */
 footer {
     margin-top: 3rem;
     text-align: center;
@@ -220,12 +191,81 @@ footer {
     padding-top: 1.5rem;
 }
 
-/* Helper class for mobile-only elements */
+/* Helper classes */
 .mobile-only {
     display: none;
 }
 
-/* Mobile Styles (screens smaller than 768px) */
+/* Error Page Styles */
+.error-container {
+    min-height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.error-box {
+    text-align: center;
+    max-width: 500px;
+    padding: 3rem;
+    background: #f9f9f9;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.error-code {
+    font-size: 6rem;
+    font-weight: bold;
+    color: #0066cc;
+    margin: 0;
+    line-height: 1;
+}
+
+.error-title {
+    font-size: 2rem;
+    color: #333;
+    margin: 1rem 0;
+}
+
+.error-message {
+    color: #666;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.error-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.error-btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: #0066cc;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.error-btn:hover {
+    background-color: #0052a3;
+    transform: translateY(-2px);
+}
+
+.error-btn-secondary {
+    background-color: #6c757d;
+}
+
+.error-btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Mobile Styles */
 @media screen and (max-width: 767px) {
     .desktop-nav {
         display: none;
@@ -233,23 +273,31 @@ footer {
     
     .mobile-nav {
         display: block;
-        text-align: right;
-        margin-bottom: 1rem;
     }
     
     .my-account {
-        text-decoration: none;
-        color: #0066cc;
-        font-weight: bold;
-        font-size: 1.1rem;
+        color: white;
     }
     
     .mobile-only {
         display: block;
     }
+    
+    .error-box {
+        padding: 2rem;
+        margin: 1rem;
+    }
+    
+    .error-code {
+        font-size: 4rem;
+    }
+    
+    .error-title {
+        font-size: 1.5rem;
+    }
 }
 
-/* Desktop Styles (screens 768px and larger) */
+/* Desktop Styles */
 @media screen and (min-width: 768px) {
     .upgrades-grid {
         grid-template-columns: repeat(2, 1fr);
