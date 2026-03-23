@@ -17,6 +17,11 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+// ADD THIS TEST ROUTE
+app.get('/test123', (req, res) => {
+    res.send('SUCCESS! The server is working!');
+});
+
 // 404 Handler
 app.use((req, res) => {
   res.status(404).render('404');

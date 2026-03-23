@@ -1,7 +1,14 @@
+console.log('🔥🔥🔥 INVENTORY ROUTES FILE IS LOADING 🔥🔥🔥');
+
 const dotenv = require('dotenv');
 dotenv.config();
 const express = require('express');
 const router = express.Router();
+
+router.get('/test', (req, res) => {
+    res.send('TEST ROUTE IS WORKING!');
+});
+
 
 // Testing function to make sure route works
 router.get('/detail/:id', (req, res) => {
@@ -19,7 +26,7 @@ router.post('/custom/submit', (req, res) => {
 });
 
 // Sedan page route
-router.get('/sedan', (req, res) => {
+router.get('/views/sedan', (req, res) => {
     res.render('sedan', { title: 'Sedan Vehicles' });
 });
 
