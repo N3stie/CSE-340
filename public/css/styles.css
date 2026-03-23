@@ -265,49 +265,6 @@ footer {
     background-color: #5a6268;
 }
 
-/* Mobile Styles */
-@media screen and (max-width: 767px) {
-    .desktop-nav {
-        display: none;
-    }
-    
-    .mobile-nav {
-        display: block;
-    }
-    
-    .my-account {
-        color: white;
-    }
-    
-    .mobile-only {
-        display: block;
-    }
-    
-    .error-box {
-        padding: 2rem;
-        margin: 1rem;
-    }
-    
-    .error-code {
-        font-size: 4rem;
-    }
-    
-    .error-title {
-        font-size: 1.5rem;
-    }
-}
-
-/* Desktop Styles */
-@media screen and (min-width: 768px) {
-    .upgrades-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .featured-vehicle {
-        padding: 3rem;
-    }
-}
-
 /* Custom Form Styles */
 .custom-form {
     max-width: 600px;
@@ -362,6 +319,186 @@ footer {
 
 .submit-btn:hover {
     background-color: #0052a3;
+}
+
+/* Vehicle Card Styles */
+.vehicle-card {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.vehicle-image {
+    flex: 1;
+    min-width: 250px;
+}
+
+.vehicle-image img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.vehicle-info {
+    flex: 2;
+}
+
+.vehicle-info h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.vehicle-info .price {
+    font-size: 1.5rem;
+    color: #0066cc;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.vehicle-info .description {
+    color: #666;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.specs {
+    list-style: none;
+    margin: 1rem 0;
+}
+
+.specs li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.reserve-btn {
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.reserve-btn:hover {
+    background-color: #0052a3;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 2rem;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 1rem;
+    top: 0.5rem;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #999;
+}
+
+.close:hover {
+    color: #333;
+}
+
+.modal-content input,
+.modal-content textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.modal-content button {
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    width: 100%;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.modal-content button:hover {
+    background-color: #0052a3;
+}
+
+/* Mobile Styles */
+@media screen and (max-width: 767px) {
+    .desktop-nav {
+        display: none;
+    }
+    
+    .mobile-nav {
+        display: block;
+    }
+    
+    .my-account {
+        color: white;
+    }
+    
+    .mobile-only {
+        display: block;
+    }
+    
+    .error-box {
+        padding: 2rem;
+        margin: 1rem;
+    }
+    
+    .error-code {
+        font-size: 4rem;
+    }
+    
+    .error-title {
+        font-size: 1.5rem;
+    }
+    
+    .vehicle-card {
+        flex-direction: column;
+    }
+    
+    .modal-content {
+        margin: 30% auto;
+        padding: 1.5rem;
+    }
+}
+
+/* Desktop Styles */
+@media screen and (min-width: 768px) {
+    .upgrades-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .featured-vehicle {
+        padding: 3rem;
+    }
 }
 
 main h2 {
