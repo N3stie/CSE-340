@@ -9,6 +9,7 @@ router.get('/test', (req, res) => {
     // res.send('TEST ROUTE IS WORKING!');
 });
 
+
 // route for vehicle detail page
 router.get('/detail/:id', (req, res) => {
     res.send('Vehicle detail page works! Vehicle ID: ' + req.params.id);
