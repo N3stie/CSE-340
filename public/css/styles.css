@@ -59,23 +59,26 @@ nav {
     border-radius: 4px;
 }
 
-/* Mobile Navigation */
+/* Mobile Navigation - Updated to show all links */
 .mobile-nav {
     display: none;
+    flex-direction: column;
+    gap: 0.5rem;
     padding: 1rem;
-    text-align: right;
     background-color: #333;
 }
 
-.my-account {
+.mobile-nav a {
     color: white;
     text-decoration: none;
     font-weight: bold;
-    padding: 0.5rem 1rem;
-    display: inline-block;
+    padding: 0.75rem;
+    text-align: center;
+    border-bottom: 1px solid #555;
+    display: block;
 }
 
-.my-account:hover {
+.mobile-nav a:hover {
     background-color: #0066cc;
     border-radius: 4px;
 }
@@ -456,11 +459,7 @@ footer {
     }
     
     .mobile-nav {
-        display: block;
-    }
-    
-    .my-account {
-        color: white;
+        display: flex;
     }
     
     .mobile-only {
