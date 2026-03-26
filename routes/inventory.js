@@ -6,7 +6,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/test', (req, res) => {
-    res.send('TEST ROUTE IS WORKING!');
+    // res.send('TEST ROUTE IS WORKING!');
 });
 
 router.get('/detail/:id', (req, res) => {

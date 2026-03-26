@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head') %>
+    <title>SUV - CSE Motors</title>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <%- include('partials/nav') %>
+
+    <main>
+        <h2>SUV Vehicles</h2>
+        <p>Browse our collection of spacious SUVs</p>
+
+        <div class="vehicle-card">
+            <div class="vehicle-image">
+                <img src="/images/" alt="SUV" onerror="this.src='https://placehold.co/600x400?text=SUV'">
+            </div>
+            <div class="vehicle-info">
+                <h3>Adventure SUV</h3>
+                <p class="price">$42,000</p>
+                <p class="description">Perfect for family adventures and off-road exploration. Spacious interior with advanced safety features.</p>
+                <ul class="specs">
+                    <li>Engine: 3.5L V6</li>
+                    <li>MPG: 19 City / 26 Highway</li>
+                    <li>Seats: 7 Passengers</li>
+                    <li>Drivetrain: 4WD</li>
+                </ul>
+                <button class="reserve-btn" onclick="openReserveForm()">Click for Reserve</button>
+            </div>
+        </div>
+
+        <div id="reserveModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>Reserve This Vehicle</h3>
+                <form id="reserveForm">
+                    <input type="text" placeholder="Full Name" required>
+                    <input type="email" placeholder="Email" required>
+                    <input type="tel" placeholder="Phone Number" required>
+                    <textarea placeholder="Message (optional)"></textarea>
+                    <button type="submit">Submit Reservation</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+
+    <script>
+        function openReserveForm() {
+            document.getElementById('reserveModal').style.display = 'block';
+        }
+
+        document.getElementById('reserveForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you! We will contact you soon.');
+            document.getElementById('reserveModal').style.display = 'none';
+            this.reset();
+        });
+
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('reserveModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('reserveModal')) {
+                document.getElementById('reserveModal').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
