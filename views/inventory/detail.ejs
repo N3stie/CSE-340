@@ -13,5 +13,37 @@
   </main>
 
   <%- include('../partials/footer') %>
+
+  <script>
+    function openReserveForm() {
+        document.getElementById('reserveModal').style.display = 'block';
+    }
+
+    // Making sure the script runs after the modal is loaded so that the event listeners can be attached properly
+    document.addEventListener('DOMContentLoaded', function() {
+        const reserveForm = document.getElementById('reserveForm');
+        if (reserveForm) {
+            reserveForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you! We will contact you soon.');
+                document.getElementById('reserveModal').style.display = 'none';
+                this.reset();
+            });
+        }
+
+        const closeBtn = document.querySelector('.close');
+        if (closeBtn) {
+            closeBtn.onclick = function() {
+                document.getElementById('reserveModal').style.display = 'none';
+            }
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('reserveModal')) {
+                document.getElementById('reserveModal').style.display = 'none';
+            }
+        }
+    });
+  </script>
 </body>
 </html>
