@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head') %>
+    <title><%= title %></title>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <%- include('partials/nav') %>
+
+    <main>
+        <h2><%= title %></h2>
+        <p>Browse our collection of <%= classification.toLowerCase() %> vehicles</p>
+
+        <!-- Vehicle List for <%= classification %> -->
+        <div class="vehicle-list">
+            <% if (vehicles && vehicles.length > 0) { %>
+                <% vehicles.forEach(vehicle => { %>
+                    <div class="vehicle-card">
+                        <div class="vehicle-image">
+                            <img src="<%= vehicle.inv_image %>" alt="<%= vehicle.inv_make %>" onerror="this.src='https://placehold.co/600x400?text=<%= vehicle.inv_make %>'">
+                        </div>
+                        <div class="vehicle-info">
+                            <h3><%= vehicle.inv_year %> <%= vehicle.inv_make %> <%= vehicle.inv_model %></h3>
+                            <p class="price">$<%= parseInt(vehicle.inv_price).toLocaleString() %></p>
+                            <p class="description"><%= vehicle.inv_description.substring(0, 100) %>...</p>
+                            <a href="/inv/detail/<%= vehicle.inv_id %>" class="view-details-btn">View Details</a>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p>No vehicles found in this category.</p>
+            <% } %>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+</body>
+</html>>

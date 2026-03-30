@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head') %>
+    <title>Sedan - CSE Motors</title>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <%- include('partials/nav') %>
+
+    <main>
+        <h2>Sedan Vehicles</h2>
+        <p>Browse our collection of premium sedans</p>
+
+        <% if (vehicles && vehicles.length > 0) { %>
+            <% vehicles.forEach(vehicle => { %>
+                <div class="vehicle-card">
+                    <div class="vehicle-image">
+                        <img src="<%= vehicle.inv_image %>" alt="<%= vehicle.inv_make %>" onerror="this.src='https://placehold.co/600x400?text=<%= vehicle.inv_make %>'">
+                    </div>
+                    <div class="vehicle-info">
+                        <h3><%= vehicle.inv_year %> <%= vehicle.inv_make %> <%= vehicle.inv_model %></h3>
+                        <p class="price">$<%= parseInt(vehicle.inv_price).toLocaleString() %></p>
+                        <p class="description"><%= vehicle.inv_description %></p>
+                        <ul class="specs">
+                            <li>Color: <%= vehicle.inv_color %></li>
+                            <li>Mileage: <%= parseInt(vehicle.inv_miles).toLocaleString() %> miles</li>
+                        </ul>
+                        <a href="/inv/detail/<%= vehicle.inv_id %>" class="view-details-btn">View Details</a>
+                        <button class="reserve-btn" onclick="openReserveForm('<%= vehicle.inv_id %>', '<%= vehicle.inv_make %> <%= vehicle.inv_model %>')">Click for Reserve</button>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p>No sedan vehicles found in inventory.</p>
+        <% } %>
+
+        <div id="reserveModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>Reserve This Vehicle</h3>
+                <form id="reserveForm">
+                    <input type="hidden" id="vehicleId" name="vehicleId">
+                    <input type="text" id="vehicleName" name="vehicleName" readonly style="background:#f0f0f0">
+                    <input type="text" id="fullName" placeholder="Full Name" required>
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="tel" id="phone" placeholder="Phone Number" required>
+                    <textarea id="message" placeholder="Message (optional)"></textarea>
+                    <button type="submit">Submit Reservation</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+
+    <script>
+        function openReserveForm(vehicleId, vehicleName) {
+            document.getElementById('vehicleId').value = vehicleId;
+            document.getElementById('vehicleName').value = vehicleName;
+            document.getElementById('reserveModal').style.display = 'block';
+        }
+
+        document.getElementById('reserveForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you! We will contact you soon about reserving the ' + document.getElementById('vehicleName').value);
+            document.getElementById('reserveModal').style.display = 'none';
+            this.reset();
+        });
+
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('reserveModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('reserveModal')) {
+                document.getElementById('reserveModal').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,4 +1,5 @@
--- This file contains SQL statements for various operations on the database, including inserting, updating, and deleting records in the account and inventory tables. It also includes a SELECT statement to retrieve specific data from the inventory and classification tables.
+-- This file contains SQL statements for various operations on the database, including inserting,
+--  updating, and deleting records in the account and inventory tables. It also includes a SELECT statement to retrieve specific data from the inventory and classification tables.
 
 INSERT INTO account (account_firstname, account_lastname, account_email, account_password)
 VALUES ('Tony', 'Stark', 'tony@starkent.com', 'Iam1ronM@n');
