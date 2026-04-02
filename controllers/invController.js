@@ -41,4 +41,54 @@ async function getVehiclesByClassification(req, res) {
   }
 }
 
-module.exports = { getVehicleDetail, getVehiclesByClassification };
+// ADD THIS NEW FUNCTION for adding classification
+async function addClassification(req, res) {
+    try {
+        console.log('📝 addClassification function CALLED!');
+        console.log('📝 Request body:', req.body);
+        
+        const { classification_name } = req.body;
+        console.log('📝 Classification name received:', classification_name);
+        
+        // Check if classification_name exists
+        if (!classification_name) {
+            console.log('❌ No classification name provided');
+            return res.render('inventory/add-classification', {
+                title: 'Add New Classification',
+                error: 'Classification name is required'
+            });
+        }
+        
+        // Server-side validation
+        const regex = /^[A-Za-z]+$/;
+        if (!regex.test(classification_name)) {
+            console.log('❌ Validation failed - invalid characters');
+            return res.render('inventory/add-classification', {
+                title: 'Add New Classification',
+                error: 'Classification name must contain only letters (no spaces or special characters)'
+            });
+        }
+        
+        console.log('✅ Validation passed, calling model...');
+        
+        // Call model to insert
+        const result = await invModel.addClassification(classification_name);
+        console.log('📝 Model result:', result);
+        
+        if (result) {
+            console.log('✅ Redirecting to /inv');
+            res.redirect('/inv');
+        } else {
+            console.log('❌ Insert failed, no result');
+            res.render('inventory/add-classification', {
+                title: 'Add New Classification',
+                error: 'Failed to add classification. It may already exist.'
+            });
+        }
+    } catch (error) {
+        console.error('❌ Controller error:', error);
+        res.status(500).render('error');
+    }
+}
+
+module.exports = { getVehicleDetail, getVehiclesByClassification, addClassification };

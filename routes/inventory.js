@@ -7,8 +7,30 @@ const router = express.Router();
 const invController = require('../controllers/invController');
 
 router.get('/test', (req, res) => {
+    // using this for testing the new addClassification function in the controller
     // res.send('TEST ROUTE IS WORKING!');
 });
+
+// Management view route
+router.get('/', (req, res) => {
+    res.render('inventory/management', { 
+        title: 'Vehicle Management'
+    });
+});
+
+// ============================================
+//              SPECIFIC ROUTES
+// ============================================
+
+// Show add classification form
+router.get('/add-classification', (req, res) => {
+    res.render('inventory/add-classification', { 
+        title: 'Add New Classification'
+    });
+});
+
+// Process add classification form
+router.post('/add-classification', invController.addClassification);
 
 // route for vehicle detail page
 router.get('/detail/:id', invController.getVehicleDetail);
@@ -23,7 +45,11 @@ router.post('/custom/submit', (req, res) => {
     res.send('<script>alert("Thank you! We will contact you soon."); window.location.href="/";</script>');
 });
 
-// DYNAMIC ROUTE for sedan, suv, truck - using controller (THIS IS THE ONLY ONE)
+// ============================================
+//              DYNAMIC ROUTE 
+// ============================================
 router.get('/:classification', invController.getVehiclesByClassification);
+
+
 
 module.exports = router;

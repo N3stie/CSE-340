@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+    <title>Add Classification</title>
+</head>
+<body>
+    <%- include('../partials/header') %>
+    <%- include('../partials/nav') %>
+
+    <main>
+        <h1>Add New Classification</h1>
+        
+        <% if (error) { %>
+            <div class="alert alert-error"><%= error %></div>
+        <% } %>
+        
+        <form action="/inv/add-classification" method="POST" id="classificationForm">
+            <div class="form-group">
+                <label for="classification_name">Classification Name *</label>
+                <input type="text" 
+                       id="classification_name" 
+                       name="classification_name" 
+                       required 
+                       pattern="[A-Za-z]+"
+                       title="Only letters allowed, no spaces or special characters">
+                <small>Only letters allowed - no spaces or special characters</small>
+            </div>
+            
+            <button type="submit" class="btn">Add Classification</button>
+        </form>
+    </main>
+
+    <%- include('../partials/footer') %>
+
+    <script>
+        document.getElementById('classificationForm').addEventListener('submit', function(e) {
+            const name = document.getElementById('classification_name').value;
+            const regex = /^[A-Za-z]+$/;
+            
+            if (!regex.test(name)) {
+                e.preventDefault();
+                alert('Classification name must contain only letters (no spaces or special characters)');
+            }
+        });
+    </script>
+</body>
+</html>

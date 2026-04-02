@@ -393,6 +393,27 @@ footer {
     background-color: #0052a3;
 }
 
+/* for management */
+.management-links {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #0066cc;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background-color: #0052a3;
+}
+
 /* Modal Styles */
 .modal {
     display: none;
