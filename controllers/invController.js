@@ -1,94 +1,122 @@
-const invModel = require('../models/invModel');  // Fixing change 'image/model' to '../models'
+const invModel = require('../models/invModel');
 const utilities = require('../utilities');
+
+console.log('✅ invController.js loaded');
 
 async function getVehicleDetail(req, res) {
   try {
     const vehicleId = req.params.id;
-    const vehicleData = await invModel.getVehicleById(vehicleId);     
-
+    const vehicleData = await invModel.getVehicleById(vehicleId);
     if (!vehicleData) {
       return res.status(404).send('Vehicle not found');
     }
-
     const vehicleHtml = utilities.buildVehicleDetailHtml(vehicleData);
     res.render('inventory/detail', {
-      title: `${vehicleData.inv_make} ${vehicleData.inv_model}`,      
+      title: `${vehicleData.inv_make} ${vehicleData.inv_model}`,
       vehicleHtml: vehicleHtml
     });
   } catch (error) {
-    console.error('Controller error:', error);
+    console.error(error);
     res.status(500).send('Server error');
   }
 }
 
-// Adding this new function so that the controller can handle requests for vehicles by classification
 async function getVehiclesByClassification(req, res) {
   try {
     const classificationName = req.params.classification;
-    console.log('📝 Looking for classification:', classificationName);
-    
     const vehicles = await invModel.getVehiclesByClassification(classificationName);
-    console.log('🚗 Found vehicles:', vehicles.length);
-    
     res.render('classification', { 
       title: `${classificationName} Vehicles`,
       vehicles: vehicles,
       classification: classificationName
     });
   } catch (error) {
-    console.error('❌ Controller error:', error);
+    console.error(error);
     res.status(500).render('error');
   }
 }
 
-// ADD THIS NEW FUNCTION for adding classification
 async function addClassification(req, res) {
     try {
-        console.log('📝 addClassification function CALLED!');
-        console.log('📝 Request body:', req.body);
-        
         const { classification_name } = req.body;
-        console.log('📝 Classification name received:', classification_name);
-        
-        // Check if classification_name exists
-        if (!classification_name) {
-            console.log('❌ No classification name provided');
-            return res.render('inventory/add-classification', {
-                title: 'Add New Classification',
-                error: 'Classification name is required'
-            });
-        }
-        
-        // Server-side validation
         const regex = /^[A-Za-z]+$/;
         if (!regex.test(classification_name)) {
-            console.log('❌ Validation failed - invalid characters');
             return res.render('inventory/add-classification', {
                 title: 'Add New Classification',
-                error: 'Classification name must contain only letters (no spaces or special characters)'
+                error: 'Classification name must contain only letters'
             });
         }
-        
-        console.log('✅ Validation passed, calling model...');
-        
-        // Call model to insert
         const result = await invModel.addClassification(classification_name);
-        console.log('📝 Model result:', result);
-        
         if (result) {
-            console.log('✅ Redirecting to /inv');
             res.redirect('/inv');
         } else {
-            console.log('❌ Insert failed, no result');
             res.render('inventory/add-classification', {
                 title: 'Add New Classification',
-                error: 'Failed to add classification. It may already exist.'
+                error: 'Failed to add classification'
             });
         }
     } catch (error) {
-        console.error('❌ Controller error:', error);
+        console.error(error);
         res.status(500).render('error');
     }
 }
 
-module.exports = { getVehicleDetail, getVehiclesByClassification, addClassification };
+// Adding full Add Vehicle Functions
+async function showAddVehicle(req, res) {
+    try {
+        const classificationList = await utilities.buildClassificationList();
+        res.render('inventory/add-vehicle', {
+            title: 'Add New Vehicle',
+            classificationList: classificationList,
+            error: null,
+            vehicle: {}
+        });
+    } catch (error) {
+        console.error('showAddVehicle error:', error);
+        res.status(500).render('error');
+    }
+}
+
+async function addVehicle(req, res) {
+    try {
+        const { inv_make, inv_model, inv_year, inv_price, inv_miles, inv_color, classification_id, inv_description } = req.body;
+        
+        const errors = [];
+        if (!inv_make) errors.push('Make is required');
+        if (!inv_model) errors.push('Model is required');
+        if (!inv_year || !/^\d{4}$/.test(inv_year)) errors.push('Year must be 4 digits');
+        if (!inv_price || isNaN(inv_price)) errors.push('Price must be a number');
+        if (!inv_miles || isNaN(inv_miles)) errors.push('Miles must be a number');
+        if (!inv_color) errors.push('Color is required');
+        if (!classification_id) errors.push('Classification is required');
+        
+        if (errors.length > 0) {
+            const classificationList = await utilities.buildClassificationList(classification_id);
+            return res.render('inventory/add-vehicle', {
+                title: 'Add New Vehicle',
+                classificationList: classificationList,
+                error: errors.join(', '),
+                vehicle: req.body
+            });
+        }
+        
+        const result = await invModel.addVehicle(req.body);
+        
+        if (result) {
+            res.redirect('/inv');
+        } else {
+            const classificationList = await utilities.buildClassificationList(classification_id);
+            res.render('inventory/add-vehicle', {
+                title: 'Add New Vehicle',
+                classificationList: classificationList,
+                error: 'Failed to add vehicle',
+                vehicle: req.body
+            });
+        }
+    } catch (error) {
+        console.error('addVehicle error:', error);
+        res.status(500).render('error');
+    }
+}
+
+module.exports = { getVehicleDetail, getVehiclesByClassification, addClassification, showAddVehicle, addVehicle };

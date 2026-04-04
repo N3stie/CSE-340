@@ -25,12 +25,19 @@ router.get('/', (req, res) => {
 // Show add classification form
 router.get('/add-classification', (req, res) => {
     res.render('inventory/add-classification', { 
-        title: 'Add New Classification'
+        title: 'Add New Classification',
+        error: null
     });
 });
 
 // Process add classification form
 router.post('/add-classification', invController.addClassification);
+
+// Show add vehicle form - ADD THIS
+router.get('/add-vehicle', invController.showAddVehicle);
+
+// Process add vehicle form - ADD THIS
+router.post('/add-vehicle', invController.addVehicle);
 
 // route for vehicle detail page
 router.get('/detail/:id', invController.getVehicleDetail);
@@ -45,11 +52,10 @@ router.post('/custom/submit', (req, res) => {
     res.send('<script>alert("Thank you! We will contact you soon."); window.location.href="/";</script>');
 });
 
+
 // ============================================
 //              DYNAMIC ROUTE 
 // ============================================
 router.get('/:classification', invController.getVehiclesByClassification);
-
-
 
 module.exports = router;

@@ -11,7 +11,7 @@
     <main>
         <h1>Add New Classification</h1>
         
-        <% if (error) { %>
+        <% if (typeof error !== 'undefined' && error) { %>
             <div class="alert alert-error"><%= error %></div>
         <% } %>
         

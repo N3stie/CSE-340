@@ -1,3 +1,5 @@
+const invModel = require('../models/invModel');  
+
 function formatPrice(price) {
     return '$' + parseInt(price).toLocaleString();
 }
@@ -6,7 +8,6 @@ function formatMileage(miles) {
     return parseInt(miles).toLocaleString();
 }
 
-// this function builds the HTML for the vehicle detail page, including the reserve button and modal form
 function buildVehicleDetailHtml(vehicle) {
     return `
         <div class="vehicle-detail">
@@ -23,7 +24,6 @@ function buildVehicleDetailHtml(vehicle) {
             </div>
         </div>
 
-        <!-- Modal - Add this -->
         <div id="reserveModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -40,4 +40,23 @@ function buildVehicleDetailHtml(vehicle) {
     `;
 }
 
-module.exports = { formatPrice, formatMileage, buildVehicleDetailHtml };
+// Building new feature for the add vehicle form - building the classification dropdown list
+async function buildClassificationList(selectedId = null) {
+    const classifications = await invModel.getAllClassifications();
+    
+    let html = '<select name="classification_id" id="classification_id" required>';
+    html += '<option value="">Choose a Classification</option>';
+    
+    classifications.forEach(classification => {
+        html += `<option value="${classification.classification_id}"`;
+        if (selectedId && classification.classification_id == selectedId) {
+            html += ' selected';
+        }
+        html += `>${classification.classification_name}</option>`;
+    });
+    
+    html += '</select>';
+    return html;
+}
+
+module.exports = { formatPrice, formatMileage, buildVehicleDetailHtml, buildClassificationList };
