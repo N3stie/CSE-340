@@ -1,23 +1,30 @@
+console.log('✅ Account routes file loaded!');
+
 require('dotenv').config();
 
 const express = require('express');
 const app = express();
 const port = 3000;
 
+// adding the cookie parser middleware to parse cookies from incoming requests
+const cookieParser = require('cookie-parser');
+const accountRoutes = require('./routes/account');
+
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Routes
 const inventoryRoutes = require('./routes/inventory');
 app.use('/inv', inventoryRoutes);
+app.use('/account', accountRoutes);
 
 app.get('/', (req, res) => {
   res.render('index');
 });
 
-// ADD THIS TEST ROUTE
 app.get('/test123', (req, res) => {
     res.send('SUCCESS! The server is working!');
 });

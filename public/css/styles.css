@@ -486,6 +486,16 @@ footer {
     transition: all 0.3s ease;
 }
 
+/*  for success messages */
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border: 1px solid #c3e6cb;
+}
+
 .view-details-btn:hover {
     background-color: #0052a3;
     transform: translateY(-2px);
