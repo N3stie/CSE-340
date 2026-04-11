@@ -1,13 +1,11 @@
-console.log('✅ Account routes file loaded!');
-
 require('dotenv').config();
 
 const express = require('express');
 const app = express();
 const port = 3000;
 
-// adding the cookie parser middleware to parse cookies from incoming requests
 const cookieParser = require('cookie-parser');
+const { setUserLocals } = require('./middleware/auth');
 const accountRoutes = require('./routes/account');
 
 app.set('view engine', 'ejs');
@@ -15,6 +13,7 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(setUserLocals);  // ← THIS MUST BE HERE
 
 // Routes
 const inventoryRoutes = require('./routes/inventory');
