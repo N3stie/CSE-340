@@ -3,21 +3,44 @@ const utilities = require('../utilities');
 
 console.log('✅ invController.js loaded');
 
+// Show vehicle detail with reviews
 async function getVehicleDetail(req, res) {
   try {
     const vehicleId = req.params.id;
     const vehicleData = await invModel.getVehicleById(vehicleId);
+    
     if (!vehicleData) {
       return res.status(404).send('Vehicle not found');
     }
-    const vehicleHtml = utilities.buildVehicleDetailHtml(vehicleData);
+    
+    // Get reviews and average rating
+    const reviews = await invModel.getReviewsByVehicleId(vehicleId);
+    const ratingData = await invModel.getAverageRating(vehicleId);
+    
+    // Check if user has already reviewed
+    let userReviewed = false;
+    let user = null;
+    
+    if (res.locals.loggedIn && res.locals.user) {
+      user = res.locals.user;
+      userReviewed = await invModel.hasUserReviewed(user.account_id, vehicleId);
+    }
+    
+    // Pass data to the view
     res.render('inventory/detail', {
       title: `${vehicleData.inv_make} ${vehicleData.inv_model}`,
-      vehicleHtml: vehicleHtml
+      vehicle: vehicleData,
+      reviews: reviews,
+      averageRating: parseFloat(ratingData.average).toFixed(1),
+      totalReviews: ratingData.total,
+      userReviewed: userReviewed,
+      user: user,
+      loggedIn: res.locals.loggedIn,
+      reviewError: null
     });
   } catch (error) {
     console.error(error);
-    res.status(500).send('Server error');
+    res.status(500).render('error');
   }
 }
 
@@ -119,4 +142,51 @@ async function addVehicle(req, res) {
     }
 }
 
-module.exports = { getVehicleDetail, getVehiclesByClassification, addClassification, showAddVehicle, addVehicle };
+// ============================================
+// REVIEW FUNCTIONS - Final Enhancement
+// ============================================
+
+// Submit a review
+async function submitReview(req, res) {
+    try {
+        const inv_id = req.params.id;
+        const { rating, comment } = req.body;
+        const account_id = res.locals.user.account_id;
+        
+        // Server-side validation
+        const errors = [];
+        if (!rating || rating < 1 || rating > 5) errors.push('Rating must be between 1 and 5');
+        if (!comment || comment.length < 5) errors.push('Comment must be at least 5 characters');
+        
+        if (errors.length > 0) {
+            // Re-render with errors
+            const vehicleData = await invModel.getVehicleById(inv_id);
+            const reviews = await invModel.getReviewsByVehicleId(inv_id);
+            const ratingData = await invModel.getAverageRating(inv_id);
+            let userReviewed = await invModel.hasUserReviewed(account_id, inv_id);
+            
+            return res.render('inventory/detail', {
+                title: `${vehicleData.inv_make} ${vehicleData.inv_model}`,
+                vehicle: vehicleData,
+                reviews: reviews,
+                averageRating: parseFloat(ratingData.average).toFixed(1),
+                totalReviews: ratingData.total,
+                userReviewed: userReviewed,
+                user: res.locals.user,
+                loggedIn: true,
+                reviewError: errors.join(', ')
+            });
+        }
+        
+        // Add the review
+        await invModel.addReview(account_id, inv_id, rating, comment);
+        
+        res.redirect(`/inv/detail/${inv_id}`);
+        
+    } catch (error) {
+        console.error('submitReview error:', error);
+        res.status(500).render('error');
+    }
+}
+
+module.exports = { getVehicleDetail, getVehiclesByClassification, addClassification, showAddVehicle, addVehicle, submitReview };

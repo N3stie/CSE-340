@@ -9,7 +9,96 @@
   <%- include('../partials/nav') %>
 
   <main>
-    <%- vehicleHtml %>
+    <!-- Vehicle Details -->
+    <div class="vehicle-detail">
+      <div class="vehicle-detail-image">
+        <img src="<%= vehicle.inv_image %>" alt="<%= vehicle.inv_make %>">
+      </div>
+      <div class="vehicle-detail-info">
+        <h2><%= vehicle.inv_year %> <%= vehicle.inv_make %> <%= vehicle.inv_model %></h2>
+        <p class="price"><strong>Price:</strong> $<%= parseInt(vehicle.inv_price).toLocaleString() %></p>
+        <p class="mileage"><strong>Mileage:</strong> <%= parseInt(vehicle.inv_miles).toLocaleString() %> miles</p>
+        <p class="color"><strong>Color:</strong> <%= vehicle.inv_color %></p>
+        <p class="description"><strong>Description:</strong> <%= vehicle.inv_description %></p>
+        <button class="reserve-btn" onclick="openReserveForm()">Click for Reserve</button>
+      </div>
+    </div>
+
+    <!-- Ratings Summary -->
+    <div class="ratings-summary">
+      <h3>Customer Reviews</h3>
+      <div class="rating-stars">
+        <strong>Average Rating: <%= averageRating %> / 5</strong> 
+        (<%= totalReviews %> reviews)
+      </div>
+    </div>
+
+    <!-- Reviews List -->
+    <div class="reviews-list">
+      <% if (reviews && reviews.length > 0) { %>
+        <% reviews.forEach(review => { %>
+          <div class="review-card">
+            <div class="review-header">
+              <strong><%= review.account_firstname %> <%= review.account_lastname %></strong>
+              <span class="rating">Rating: <%= review.rating %>/5</span>
+              <span class="date"><%= review.created_at.toLocaleDateString() %></span>
+            </div>
+            <p class="review-comment"><%= review.comment %></p>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <p>No reviews yet. Be the first to review this vehicle!</p>
+      <% } %>
+    </div>
+
+    <!-- Add Review Form (only if logged in and not reviewed) -->
+    <% if (loggedIn && user && !userReviewed) { %>
+      <div class="add-review">
+        <h3>Write a Review</h3>
+        
+        <% if (reviewError) { %>
+          <div class="alert alert-error"><%= reviewError %></div>
+        <% } %>
+        
+        <form action="/inv/review/<%= vehicle.inv_id %>" method="POST" id="reviewForm" class="review-form">
+          <div class="form-group">
+            <label for="rating">Rating (1-5) *</label>
+            <select id="rating" name="rating" required>
+              <option value="">Select rating</option>
+              <option value="5">5 - Excellent</option>
+              <option value="4">4 - Very Good</option>
+              <option value="3">3 - Good</option>
+              <option value="2">2 - Fair</option>
+              <option value="1">1 - Poor</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="comment">Comment *</label>
+            <textarea id="comment" name="comment" rows="4" required minlength="5"></textarea>
+          </div>
+          <button type="submit" class="btn">Submit Review</button>
+        </form>
+      </div>
+    <% } else if (loggedIn && user && userReviewed) { %>
+      <p class="alert-info">You have already reviewed this vehicle.</p>
+    <% } else if (!loggedIn) { %>
+      <p class="alert-info"><a href="/account/login">Login</a> to write a review.</p>
+    <% } %>
+
+    <!-- Reserve Modal -->
+    <div id="reserveModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Reserve This Vehicle</h3>
+        <form id="reserveForm">
+          <input type="text" id="fullName" placeholder="Full Name" required>
+          <input type="email" id="email" placeholder="Email" required>
+          <input type="tel" id="phone" placeholder="Phone Number" required>
+          <textarea id="message" placeholder="Message (optional)"></textarea>
+          <button type="submit">Submit Reservation</button>
+        </form>
+      </div>
+    </div>
   </main>
 
   <%- include('../partials/footer') %>
@@ -19,7 +108,7 @@
         document.getElementById('reserveModal').style.display = 'block';
     }
 
-    // Making sure the script runs after the modal is loaded so that the event listeners can be attached properly
+    // Making sure the script runs after the modal is loaded
     document.addEventListener('DOMContentLoaded', function() {
         const reserveForm = document.getElementById('reserveForm');
         if (reserveForm) {

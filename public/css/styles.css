@@ -13,10 +13,16 @@ body {
     margin: 0 auto;
 }
 
+/* Header Styles - Centered */
+header {
+    text-align: center;
+}
+
 header h1 {
     color: #333;
     margin-bottom: 1rem;
-    font-size: 2rem;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
 }
 
 /* Navigation Styles */
@@ -59,7 +65,7 @@ nav {
     border-radius: 4px;
 }
 
-/* Mobile Navigation - Updated to show all links */
+/* Mobile Navigation */
 .mobile-nav {
     display: none;
     flex-direction: column;
@@ -393,7 +399,7 @@ footer {
     background-color: #0052a3;
 }
 
-/* for management */
+/* Management Links */
 .management-links {
     display: flex;
     gap: 1rem;
@@ -473,7 +479,7 @@ footer {
     background-color: #0052a3;
 }
 
-/* adding this to the classification page */
+/* Classification Page - View Details Button */
 .view-details-btn {
     display: inline-block;
     background-color: #0066cc;
@@ -486,7 +492,12 @@ footer {
     transition: all 0.3s ease;
 }
 
-/*  for success messages */
+.view-details-btn:hover {
+    background-color: #0052a3;
+    transform: translateY(-2px);
+}
+
+/* Alert Messages */
 .alert-success {
     background-color: #d4edda;
     color: #155724;
@@ -496,9 +507,119 @@ footer {
     border: 1px solid #c3e6cb;
 }
 
-.view-details-btn:hover {
-    background-color: #0052a3;
-    transform: translateY(-2px);
+/* ============================================
+   REVIEWS STYLES - Final Enhancement
+   ============================================ */
+
+/* Ratings Summary */
+.ratings-summary {
+    background: #f0f0f0;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+.rating-stars {
+    font-size: 1.1rem;
+}
+
+/* Reviews List */
+.reviews-list {
+    margin: 2rem 0;
+}
+
+.review-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.review-header strong {
+    color: #333;
+}
+
+.rating {
+    color: #f5a623;
+    font-weight: bold;
+}
+
+.date {
+    color: #999;
+    font-size: 0.9rem;
+}
+
+.review-comment {
+    color: #555;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+}
+
+/* Add Review Form */
+.add-review {
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+.review-form {
+    max-width: 100%;
+}
+
+.review-form select,
+.review-form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+}
+
+.review-form select:focus,
+.review-form textarea:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 0 5px rgba(0,102,204,0.3);
+}
+
+/* Alert Info */
+.alert-info {
+    background: #e7f3ff;
+    color: #0066cc;
+    padding: 1rem;
+    border-radius: 4px;
+    margin: 1rem 0;
+}
+
+.alert-info a {
+    color: #0066cc;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.alert-info a:hover {
+    text-decoration: underline;
+}
+
+/* Alert Error */
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border: 1px solid #f5c6cb;
 }
 
 /* Mobile Styles */
@@ -536,6 +657,19 @@ footer {
         margin: 30% auto;
         padding: 1.5rem;
     }
+    
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .review-header {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    .add-review {
+        padding: 1rem;
+    }
 }
 
 /* Desktop Styles */
@@ -547,15 +681,4 @@ footer {
     .featured-vehicle {
         padding: 3rem;
     }
-}
-
-main h2 {
-    text-align: center;
-    margin-bottom: 0.5rem;
-}
-
-main > p {
-    text-align: center;
-    color: #666;
-    margin-bottom: 2rem;
 }

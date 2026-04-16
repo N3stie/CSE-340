@@ -90,4 +90,73 @@ async function addVehicle(vehicleData) {
     }
 }
 
-module.exports = { getVehicleById, getVehiclesByClassification, addClassification, getAllClassifications, addVehicle };
+// ============================================
+// REVIEW FUNCTIONS - Final Enhancement
+// ============================================
+
+// Get all reviews for a specific vehicle
+async function getReviewsByVehicleId(inv_id) {
+    try {
+        const sql = `SELECT r.*, a.account_firstname, a.account_lastname 
+                     FROM review r
+                     JOIN account a ON r.account_id = a.account_id
+                     WHERE r.inv_id = $1
+                     ORDER BY r.created_at DESC`;
+        const result = await pool.query(sql, [inv_id]);
+        return result.rows;
+    } catch (error) {
+        console.error('Model error:', error);
+        throw error;
+    }
+}
+
+// Get average rating for a specific vehicle
+async function getAverageRating(inv_id) {
+    try {
+        const sql = `SELECT COALESCE(AVG(rating), 0) as average, COUNT(*) as total 
+                     FROM review 
+                     WHERE inv_id = $1`;
+        const result = await pool.query(sql, [inv_id]);
+        return result.rows[0];
+    } catch (error) {
+        console.error('Model error:', error);
+        throw error;
+    }
+}
+
+// Add a new review
+async function addReview(account_id, inv_id, rating, comment) {
+    try {
+        const sql = `INSERT INTO review (account_id, inv_id, rating, comment) 
+                     VALUES ($1, $2, $3, $4) RETURNING *`;
+        const result = await pool.query(sql, [account_id, inv_id, rating, comment]);
+        return result.rows[0];
+    } catch (error) {
+        console.error('Model error:', error);
+        throw error;
+    }
+}
+
+// Check if user has already reviewed this vehicle
+async function hasUserReviewed(account_id, inv_id) {
+    try {
+        const sql = `SELECT * FROM review WHERE account_id = $1 AND inv_id = $2`;
+        const result = await pool.query(sql, [account_id, inv_id]);
+        return result.rows.length > 0;
+    } catch (error) {
+        console.error('Model error:', error);
+        throw error;
+    }
+}
+
+module.exports = { 
+    getVehicleById, 
+    getVehiclesByClassification, 
+    addClassification, 
+    getAllClassifications, 
+    addVehicle,
+    getReviewsByVehicleId,
+    getAverageRating,
+    addReview,
+    hasUserReviewed
+};

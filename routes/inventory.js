@@ -18,9 +18,7 @@ router.get('/', (req, res) => {
     });
 });
 
-// ============================================
-//              SPECIFIC ROUTES
-// ============================================
+//SPECIFIC ROUTES
 
 // Show add classification form
 router.get('/add-classification', (req, res) => {
@@ -53,9 +51,13 @@ router.post('/custom/submit', (req, res) => {
 });
 
 
-// ============================================
-//              DYNAMIC ROUTE 
-// ============================================
+// REVIEW ROUTE 
+
+router.post('/review/:id', invController.submitReview);
+
+
+// DYNAMIC ROUTE 
+
 router.get('/:classification', invController.getVehiclesByClassification);
 
 module.exports = router;
